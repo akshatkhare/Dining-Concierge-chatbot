@@ -141,7 +141,8 @@ def validate_book_restaurant(slots):
     cuisine = try_ex(lambda: slots['Cuisine'])
     dining_date = try_ex(lambda: slots['Date'])
     dining_time = try_ex(lambda: slots['Time'])
-    phone_num = try_ex(lambda: slots['PhoneNumber'])
+    #phone_num = try_ex(lambda: slots['PhoneNumber'])
+    email = try_ex(lambda: slots['Email'])
     
     if location and not isvalid_city(location):
         return build_validation_result(
@@ -163,8 +164,8 @@ def validate_book_restaurant(slots):
             'Cuisine',
             'Sorry, I don\'t know much about this cuisine. Lets try something else!')
            
-    if phone_num and not isvalid_phone_num(phone_num):
-       return build_validation_result(False, 'PhoneNumber', 'Please give me a valid phone number of yours, so that I can notify you about your booking!')
+    #if phone_num and not isvalid_phone_num(phone_num):
+    #   return build_validation_result(False, 'PhoneNumber', 'Please give me a valid phone number of yours, so that I can notify you about your booking!')
 
     if dining_date:
         if not isvalid_date(dining_date):
@@ -186,7 +187,8 @@ def book_restaurant(intent_request):
     cuisine = try_ex(lambda: intent_request['currentIntent']['slots']['Cuisine'])
     dining_date = try_ex(lambda: intent_request['currentIntent']['slots']['Date'])
     dining_time = try_ex(lambda: intent_request['currentIntent']['slots']['Time'])
-    phone_num = try_ex(lambda: intent_request['currentIntent']['slots']['PhoneNumber'])
+    #phone_num = try_ex(lambda: intent_request['currentIntent']['slots']['PhoneNumber'])
+    email = try_ex(lambda: intent_request['currentIntent']['slots']['Email'])
     
     session_attributes = intent_request['sessionAttributes'] if intent_request['sessionAttributes'] is not None else {}
     
@@ -197,7 +199,8 @@ def book_restaurant(intent_request):
         'Cuisine': cuisine,
         'Date': dining_date,
         'Time': dining_time,
-        'PhoneNumber': phone_num,
+        'Email': email,
+        #'PhoneNumber': phone_num,
     })
 
     session_attributes['currentRestaurantReq'] = restaurant_req
@@ -249,10 +252,14 @@ def restaurantSQSRequest(requestData):
             'DataType': 'Number',
             'StringValue': requestData['Number']
         },
-        'PhoneNumber': {
-            'DataType': 'Number',
-            'StringValue': requestData['PhoneNumber']
+        'Email': {
+            'DataType': 'String',
+            'StringValue': requestData['Email']
         },
+        #'PhoneNumber': {
+        #    'DataType': 'Number',
+        #    'StringValue': requestData['PhoneNumber']
+        #},
         'Cuisine':{
             'DataType':'String',
             'StringValue': requestData['Cuisine']
