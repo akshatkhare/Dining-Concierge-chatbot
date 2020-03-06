@@ -76,6 +76,18 @@ def message_template(common_data, msg_content):
 def send_to_sns(common_data, raw_data):
     ses = boto3.client('ses')
     sns = boto3.client('sns')
+    
+    #def send_text_message(phone_num, text):
+    #print("sending message")
+    #client = boto3.client('sns')
+    #phone_num = common_data['Records'][0]['messageAttributes']['PhoneNumber']['stringValue']
+    #phone_num = "+1" + phone_num
+    #print(phone_num)
+    #msg = message_template(common_data,raw_data)
+    #print("printing message")
+    #print(msg)
+    #response = client.publish(PhoneNumber=phone_num, Message=msg)
+    
     # print (event)
     topic_name = 'Send-email'
     # topic = sns.create_topic(Name = topic_name)
@@ -123,6 +135,42 @@ def send_to_sns(common_data, raw_data):
     TopicArn = 'arn:aws:sns:us-east-1:106689315603:Send-email',    
     Message=msg)
     '''
+        
+    # # Print out the response
+    # print("SNS Response:", response)
+    
+    # ses = boto3.client('ses')
+
+    # response = ses.verify_email_identity(
+    #   EmailAddress = c_email
+    # )
+    # print (response)
+    
+    # response = ses.send_email(
+    #   Source          = 'mbjori@gmail.com',
+    #   Destination     = {
+        
+    #     'ToAddresses' : [
+    #       c_email,
+    #     ]
+    #   },
+    
+    #   Message = {
+    #     'Subject'    : {
+    #       'Data'     : 'Restaurant Notification',
+    #       'Charset'  : 'UTF-8'
+    #     },
+    #     'Body'       : {
+    #       'Text'     : {
+    #         'Data'   : msg,
+    #         'Charset': 'UTF-8'
+    #       }
+    #     }
+    #   }
+    # )
+    
+    # print(response)
+     
     
     
     return {
@@ -145,4 +193,3 @@ def query_elastic(event, context):
         'statusCode': 200,
         'body': json.dumps('Hello from Lambda!')
     }
-
