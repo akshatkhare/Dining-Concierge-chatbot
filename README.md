@@ -1,2 +1,2 @@
 # Dining-Concierge-chatbot
-This app is for recommending restaurants to users.
+This is an AWS app for recommending restaurants to users.
